@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEP</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+</head>
+
+<body class="bodyCep">
+
+    <header>
+
+      <div class="container">
+
+        <div class="row">
+
+            <div class="col-12">
+
+
+                <div class="menuCompleto">
+
+
+
+                  <div class="logo">
+                    <img src="imagens/logo.png" alt="" class="logo2">
+                  </div>
+                  
+                  <a href="index.html" data-menu="HOME"> HOME</a>
+                  
+                  <a href="cep.html" data-menu="CEP">CEP</a>
+                  <a href="dolar.html" data-menu="DOLAR">DÓLAR</a>
+                
+                             
+                </div>
+
+               
+
+                
+            </div>
+
+        </div>
+
+    
+    </header>
+
+
+    <main>
+
+      <div class="container">
+
+      <div class="row">
+       
+
+        <div class="col-lg-6 col-12">
+         
+
+          <form class="formCep">
+                
+            <fieldset class="tamanhoCep">
+    
+            <label class="labelCep" for="cep">CEP:</label>
+            <input class="inputCep1" type="text" id="cep" autocomplete="off" placeholder="Procurar...">
+            <br>
+           
+            <label class="labelCep" for="rua">Rua:</label>
+            <input class="inputCep" type="text" id="rua" readonly>
+            <br>
+           
+            <label class="labelCep" for="numero">Número:</label>
+            <input class="inputCep" type="text" id="numero">
+            <br>
+           
+            <label class="labelCep" for="bairro">Bairro:</label>
+            <input class="inputCep" type="text" id="bairro" readonly>
+            <br>
+           
+            <label class="labelCep" for="cidade">Cidade:</label>
+            <input class="inputCep" type="text" id="cidade" readonly>
+            <br>
+           
+            <label class="labelCep" for="estado">Estado:</label>
+            <input class="inputCep" type="text" id="estado" readonly>
+           
+    
+          </form>
+
+
+        </div>
+
+        <div class="col-lg-6 col-12">
+
+
+          <div class="tamanho">
+
+         
+          <p class="titulo"> 
+            O que é o CEP?
+          </p>
+
+          <br>
+          
+
+
+          <p class="historiaCep">
+
+            CEP é a sigla de Código de Endereçamento Postal, criado e utilizado
+             pelos Correios para facilitar o encaminhamento e a entrega das correspondências
+              aos destinatários. <br>
+              O CEP pode estar relacionado a uma região, um bairro específico, ou até mesmo 
+              o prédio do destinatário da correspondência. Para facilitar a criação dos CEPs 
+              a Empresa Brasileira de Correios e Telégrafos dividiu o Brasil em 10 regiões postais.
+
+          </p>
+
+        
+
+
+        </div>
+      </div>
+      </div>
+
+    
+    </div>
+          
+        
+
+
+</main>
+
+<footer>
+
+</footer>
+
+
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+crossorigin="anonymous"></script>
+    
+</body>
+
+
+
+
+<script>
+    //preencher os inputs com arrow functions
+    const preencherFormulario = (endereco) => {
+    document.getElementById("rua").value = endereco.logradouro;
+    document.getElementById("bairro").value = endereco.bairro;
+    document.getElementById("cidade").value = endereco.localidade;
+    document.getElementById("estado").value = endereco.uf;
+}
+//autopreenchimento
+const cepValido = (cep) => {
+    if (cep.length == 8) {
+        return true;
+    } else {
+        return false;
+    }
+}
+//buscar API
+//Com async e await podemos trabalhar com código assíncrono em um estilo mais parecido com o bom e velho código síncrono.
+const pesquisarCep = async () => {
+    const cep = document.getElementById("cep").value;
+    const url = `http://viacep.com.br/ws/${cep}/json/`;
+    if (cepValido(cep)) {
+        const dados = await fetch(url);
+        const endereco = await dados.json();
+            preencherFormulario(endereco);
+        }
+}
+document.getElementById("cep").addEventListener("focusout", pesquisarCep);
+</script>
+</html>
+
+
+    
+  
+
